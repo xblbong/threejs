@@ -26,15 +26,30 @@ var camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeigh
 // Renderer dimanakan untuk menampilkan hasil dari camera ke layar
 var renderer = new THREE.WebGLRenderer();
            
-var boxGeometry = new THREE.BoxGeometry(1, 1, 1); // membuat geometry kubus dengan panjang sisi 1 box nya ini di import dari three.js
-var boxMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff}); // membuat material dengan warna hijau warnanya dalam format hex (rgb) (ff0000 = merah, 00ff00 = hijau, 0000ff = biru)
-var boxMesh = new THREE.Mesh(boxGeometry, boxMaterial); // menggabungkan geometry dan material menjadi mesh
+// var boxGeometry = new THREE.BoxGeometry(1.5, 1, 2); // membuat geometry kubus dengan panjang sisi 1 box nya ini di import dari three.js
+// var boxMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff}); // membuat material dengan warna hijau warnanya dalam format hex (rgb) (ff0000 = merah, 00ff00 = hijau, 0000ff = biru)
+// var boxMesh = new THREE.Mesh(boxGeometry, boxMaterial); // menggabungkan geometry dan material menjadi mesh
 
-scene.add(boxMesh); // menambahkan mesh ke dalam scene
+// scene.add(boxMesh); // menambahkan mesh ke dalam scene
 camera.position.z = 5; // mengatur posisi camera menjauh dari origin sejauh 5 satuan
 
 renderer.setSize(window.innerWidth, window.innerHeight); // mengatur ukuran renderer sesuai ukuran layar
 document.body.appendChild(renderer.domElement);
+
+const geo_saya = new THREE.BufferGeometry(); // membuat geometry kosong
+let simpul = new Float32Array([ // membuat array untuk menyimpan posisi titik-titik vertex
+    -1.0, -1.0, 0.0, // titik 1 (x, y, z)
+     1.0, 1.0, 0.0, // titik 2 (x, y, z)
+     -1.0,  1.0, 0.0,  // titik 3 (x, y, z)
+     1.0, 1.0, 0.0, // titik 2 (x, y, z)
+     1.0, -1.0, 0.0, // titik 2 (x, y, z)
+     -1.0,  -1.0, 0.0,  // titik 3 (x, y, z)
+
+]);
+geo_saya.setAttribute('position', new THREE.BufferAttribute(simpul, 3)); // menambahkan atribut posisi ke geometry dengan 3 komponen per vertex (x, y, z)
+const material_saya = new THREE.MeshBasicMaterial({color: 0xff0000}); // membuat material
+const mesh_saya = new THREE.Mesh(geo_saya, material_saya); // membuat mesh dari geometry dan material
+scene.add(mesh_saya); // menambahkan mesh ke dalam scene
 
 // menyesuaikan ukuran renderer dan aspect ratio camera saat jendela diubah ukurannya
 window.addEventListener('resize', function(){
@@ -48,8 +63,9 @@ window.addEventListener('resize', function(){
 // fungsi untuk merender scene
 function draw(){
     requestAnimationFrame(draw); // memanggil fungsi draw secara berulang-ulang
-    boxMesh.rotation.x += 0.01; // memutar mesh pada sumbu x
-    boxMesh.rotation.y += 0.01; // memutar mesh pada sumbu y
+    mesh_saya.rotation.x += 0.01; // memutar mesh pada sumbu x
+//     boxMesh.rotation.x += 0.01; // memutar mesh pada sumbu x
+//     boxMesh.rotation.y += 0.01; // memutar mesh pada sumbu y
     renderer.render(scene, camera);  // merender scnene dari sudut pandang camera
 }   
 draw(); // memanggil fungsi draw untuk pertama kali
