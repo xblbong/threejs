@@ -9,18 +9,32 @@ camera.position.z = 5;
 
 const geo_saya = new THREE.BoxGeometry(2, 2, 2);
 const image_texture = new THREE.TextureLoader().load('./assets/images/image.png');
+const image_texture2 = new THREE.TextureLoader().load('./assets/images/image2.png');
 
 // membuat mesh pertama
-const material_saya = new THREE.MeshBasicMaterial({map: image_texture});
+const material_saya = new THREE.MeshBasicMaterial({ map: image_texture });
 let mesh_saya = new THREE.Mesh(geo_saya, material_saya);
 scene.add(mesh_saya);
 
 // membuat mesh kedua
 let cahaya1 = new THREE.PointLight(0xffffff, 70);
-cahaya1.position.set(0, 3, 2);
-scene.add(cahaya1); 
+cahaya1.position.set(0, -3, 2);
+scene.add(cahaya1);
 
-const material_saya2 = new THREE.MeshLambertMaterial({map: image_texture});
+let cahaya2 = new THREE.PointLight(0xffffff, 70);
+cahaya2.position.set(0, 3, 2);
+scene.add(cahaya2);
+
+const material_saya2 = new THREE.MeshLambertMaterial({
+    map: image_texture,
+    alphaMap: image_texture2,
+    transparent: true,
+    
+    // emissive: 0xff00ff,
+    // emissiveIntensity: 2,
+    // emissiveMap: image_texture2,
+    side: THREE.DoubleSide
+});
 let mesh_saya2 = new THREE.Mesh(geo_saya, material_saya2);
 mesh_saya2.position.set(3.9, 0, 0);
 scene.add(mesh_saya2);
@@ -34,13 +48,13 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 });
 
-function update(){
+function update() {
     mesh_saya.rotation.x += 0.01;
     mesh_saya.rotation.y += 0.01;
-    
+
     mesh_saya2.rotation.x += 0.01;
     mesh_saya2.rotation.y += 0.01;
-    
+
     requestAnimationFrame(update);
     renderer.render(scene, camera);
 }
