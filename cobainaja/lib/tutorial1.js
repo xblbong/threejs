@@ -38,17 +38,62 @@ document.body.appendChild(renderer.domElement);
 
 const geo_saya = new THREE.BufferGeometry(); // membuat geometry kosong
 let simpul = new Float32Array([ // membuat array untuk menyimpan posisi titik-titik vertex
-    -1.0, -1.0, 0.0, // titik 1 (x, y, z)
-     1.0, 1.0, 0.0, // titik 2 (x, y, z)
-     -1.0,  1.0, 0.0,  // titik 3 (x, y, z)
-     1.0, 1.0, 0.0, // titik 2 (x, y, z)
-     1.0, -1.0, 0.0, // titik 2 (x, y, z)
-     -1.0,  -1.0, 0.0,  // titik 3 (x, y, z)
+    -1.0, -1.0, 1.0, // index 0 (x, y, z)
+     1.0, 1.0, 1.0, // index 1 (x, y, z)
+     -1.0,  1.0, 1.0,  // index 2 (x, y, z)
+     1.0,  -1.0, 1.0, // index 3 (x, y, z)
 
+     -1.0, -1.0, -1.0, // index 4 (x, y, z)
+     1.0, 1.0, -1.0, // index 5 (x, y, z)
+     -1.0,  1.0, -1.0,  // index 6 (x, y, z)
+     1.0,  -1.0, -1.0, // index 7 (x, y, z)
+
+    
+]); 
+
+let warna = new Float32Array([
+    1.0, 0.0, 0.0, // warna merah untuk vertex 0
+    0.0, 1.0, 0.0, // warna hijau untuk vertex 1
+    0.0, 0.0, 1.0, // warna biru untuk vertex 2
+    1.0, 1.0, 0.0, // warna kuning untuk vertex 3
+    1.0, 0.0, 1.0, // warna magenta untuk vertex 4
+    0.0, 1.0, 1.0, // warna cyan untuk vertex 5
+    1.0, 1.0, 1.0, // warna putih untuk vertex 6
+    0.0, 0.0, 0.0, // warna hitam untuk vertex 7
 ]);
+
 geo_saya.setAttribute('position', new THREE.BufferAttribute(simpul, 3)); // menambahkan atribut posisi ke geometry dengan 3 komponen per vertex (x, y, z)
-const material_saya = new THREE.MeshBasicMaterial({color: 0xff0000}); // membuat material
-const mesh_saya = new THREE.Mesh(geo_saya, material_saya); // membuat mesh dari geometry dan material
+geo_saya.setAttribute('color', new THREE.BufferAttribute(warna, 3)); // menambahkan atribut warna ke geometry dengan 3 komponen per vertex (r, g, b)
+geo_saya.setIndex([
+    //sisi depan
+   0,3,1,
+   1,2,0,
+
+   //sisi belakang
+   4,6,5,
+   5,7,4,
+
+   //sisi kiri
+   4,0,2,
+    2,6,4,
+
+   //sisi kanan
+   7,5,1,
+   1,3,7,
+
+   //sisi atas
+   6,2,1,
+   1,5,6,
+
+    //sisi bawah
+    7,3,0,
+    0,4,7,
+
+
+]); // mengatur index untuk menggambar segitiga
+// const material_saya = new THREE.MeshBasicMaterial({color: 0xff0000,}); //side: THREE.DoubleSide}); // membuat material
+const material_saya = new THREE.MeshBasicMaterial({vertexColors: true}); //side: THREE.DoubleSide}); // membuat material
+let mesh_saya = new THREE.Mesh(geo_saya, material_saya); // membuat mesh dari geometry dan material
 scene.add(mesh_saya); // menambahkan mesh ke dalam scene
 
 // menyesuaikan ukuran renderer dan aspect ratio camera saat jendela diubah ukurannya
@@ -64,6 +109,7 @@ window.addEventListener('resize', function(){
 function draw(){
     requestAnimationFrame(draw); // memanggil fungsi draw secara berulang-ulang
     mesh_saya.rotation.x += 0.01; // memutar mesh pada sumbu x
+    mesh_saya.rotation.y += 0.01; // memutar mesh pada sumbu x
 //     boxMesh.rotation.x += 0.01; // memutar mesh pada sumbu x
 //     boxMesh.rotation.y += 0.01; // memutar mesh pada sumbu y
     renderer.render(scene, camera);  // merender scnene dari sudut pandang camera
