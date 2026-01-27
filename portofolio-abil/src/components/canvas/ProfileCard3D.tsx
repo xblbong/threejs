@@ -88,7 +88,7 @@ export default function ProfileCard3D({ name, tagline, skills }: ProfileCardProp
           <div className="w-full space-y-4 text-left">
             {skills.map((skill, index) => (
               <div key={skill.label} className="w-full">
-                <div className="flex justify-between text-[10px] uppercase tracking-widest text-white/50 mb-1.5 font-bold">
+                <div className="flex justify-between text-[10px] capitalize tracking-widest text-white/50 mb-1.5 font-bold">
                   <span>{skill.label}</span>
                   <span>{skill.value}%</span>
                 </div>

@@ -25,8 +25,8 @@ body::before {
   inset: 0;
   pointer-events: none;
   background: radial-gradient(
-    500px circle at var(--x, 50%) var(--y, 50%),
-    rgba(176, 111, 236, 0.35),
+    600px circle at var(--x, 50%) var(--y, 50%),
+    rgba(250, 228, 228, 0.285),
     rgba(118, 20, 210, 0.15) 30%,
     transparent 65%
   );
@@ -75,7 +75,7 @@ body::after {
 
 .pc-card.active {
   transition: none;
-  --card-opacity: 1; /* Glow makin terang saat hover */
+  --card-opacity: 2; /* Glow makin terang saat hover */
 }
 
 /* Background Dinamis yang berubah warna sesuai kursor */

@@ -42,7 +42,7 @@ export default function HeroSection() {
                         </div>
 
                         <h1 className="[filter:drop-shadow(0_0_10px_rgba(00,00,00,0.5))] text-5xl md:text-7xl font-extrabold leading-tight mb-6">
-                            Creative <br />
+                            Halo! im<br />
                             <span className="bg-gradient-to-r from-[#b06fec] via-purple-300 to-white bg-clip-text text-transparent">
                                 Frontend Developer
                             </span>

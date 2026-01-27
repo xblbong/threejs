@@ -95,7 +95,7 @@ export default function PremiumProfileCard({
         <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
           <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 w-fit">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[10px] uppercase tracking-widest text-white/80 font-bold">
+            <span className="text-[10px] capitalize tracking-widest text-white/80 font-bold">
               {status}
             </span>
           </div>
@@ -111,7 +111,7 @@ export default function PremiumProfileCard({
 
           <div className="mt-6 pt-6 border-t border-white/10 flex items-center justify-between">
             <div className="flex flex-col">
-              <span className="text-white/40 text-[10px] uppercase tracking-widest font-bold">Instagram</span>
+              <span className="text-white/40 text-[10px] capitalize tracking-widest font-bold">Instagram</span>
               <button onClick={() => window.location.href = `https://www.instagram.com/${handle}`} className="text-white/90 font-mono text-sm">@{handle}</button>
             </div>
             
