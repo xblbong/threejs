@@ -18,12 +18,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { name: "About", href: "#about", icon: <User size={18} /> },
+  { name: "Skills", href: "#skills", icon: <Code2 size={18} /> },
   {
     name: "MyProjects",
     href: "#projects",
     icon: <FolderArchiveIcon size={18} />,
   },
-  { name: "Skills", href: "#skills", icon: <Code2 size={18} /> },
   { name: "Experience", href: "#experience", icon: <Briefcase size={18} /> },
   { name: "Certificates", href: "#certificates", icon: <Award size={18} /> },
   // { name: "Hobbies", href: "#hobbies", icon: <Heart size={18} /> },
@@ -55,7 +55,7 @@ export default function Navbar() {
           className="font-bold text-2xl tracking-tighter
             bg-gradient-to-r from-white via-purple-200 to-purple-400
             bg-clip-text text-transparent
-            [filter:drop-shadow(0_0_10px_rgba(00,00,00,0.5))]"
+            [filter:drop-shadow(0_0_2px_rgba(0,0,0,0.5))]"
         >
           PortoBila
         </h1>
@@ -66,10 +66,13 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
-              className="px-4 py-2 rounded-full text-lg font-medium hover:bg-white/10 dark:hover:bg-white/5 transition-all relative group"
+              className="px-4 py-2 rounded-full text-lg font-medium 
+             text-outline-soft
+             hover:bg-white/10 dark:hover:bg-white/5 
+             transition-all relative group"
             >
               <span className="relative z-10">{link.name}</span>
-              <motion.div className="absolute inset-0 bg-purple-500/20 rounded-full scale-0 group-hover:scale-100 transition-transform origin-center" />
+              <motion.div className="absolute inset-0 bg-purple-300/80 rounded-full scale-0 group-hover:scale-100 transition-transform origin-center" />
             </a>
           ))}
         </div>

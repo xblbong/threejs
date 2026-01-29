@@ -10,24 +10,24 @@ interface ProjectsSectionProps {
 export default function MyProjectsSection({ projects }: ProjectsSectionProps) {
   return (
     <section id="projects" className="py-24 bg-[#fcfaff]">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-10 md:px-6 lg:px-32">
         {/* Header Section */}
         <div className="max-w-3xl mb-16">
           <motion.span 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-purple-600 font-black tracking-[0.2em] text-sm capitalize"
+            className="text-gray-600 font-black tracking-[0.2em] text-sm capitalize"
           >
             My Portfolio
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl font-black text-purple-950 italic mt-2 capitalize"
+            className="text-5xl md:text-6xl font-black text-gray-800 italic mt-2 capitalize text-shadow-2xs"
           >
             Featured Projects
           </motion.h2>
-          <p className="text-purple-800/60 mt-4 text-lg">
+          <p className="text-gray-800/60 mt-4 text-lg">
             A collection of my latest work on building meaningful digital experiences.
           </p>
         </div>

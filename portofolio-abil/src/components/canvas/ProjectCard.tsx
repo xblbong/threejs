@@ -37,10 +37,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Konten Teks */}
       <div className="px-2 flex-grow">
-        <h3 className="text-2xl font-black text-purple-900 mb-2 italic capitalize tracking-tight">
+        <h3 className="text-2xl font-black text-gray-800 mb-2 italic capitalize tracking-tight">
           {project.title}
         </h3>
-        <p className="text-purple-700/70 text-sm line-clamp-3 mb-6 font-medium leading-relaxed">
+        <p className="text-gray-700/70 text-sm line-clamp-3 mb-6 font-medium leading-relaxed">
           {project.description}
         </p>
       </div>
@@ -50,7 +50,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {project.tech_stack.map((tech) => (
           <span
             key={tech}
-            className="px-3 py-1 bg-purple-50 border border-purple-100 text-purple-600 text-[10px] font-bold rounded-full capitalize tracking-wider"
+            className="px-3 py-1 bg-purple-50 border border-purple-100 text-gray-600 text-[10px] font-bold rounded-full capitalize tracking-wider"
           >
             {tech}
           </span>

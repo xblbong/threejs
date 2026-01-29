@@ -9,20 +9,26 @@ interface Skill {
 }
 
 interface ProfileCardProps {
+  imageUrl?: string;
   name: string;
   tagline: string;
   skills: Skill[];
 }
 
-export default function ProfileCard3D({ name, tagline, skills }: ProfileCardProps) {
+export default function ProfileCard3D({ imageUrl, name, tagline, skills }: ProfileCardProps) {
   // 3D Tilt Logic khusus untuk Card ini
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
   const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
-  
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+
+  const [isMobile, setIsMobile] = React.useState(false);
+  React.useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], isMobile ? ["0deg", "0deg"] : ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], isMobile ? ["0deg", "0deg"] : ["-15deg", "15deg"])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -60,12 +66,15 @@ export default function ProfileCard3D({ name, tagline, skills }: ProfileCardProp
 
         {/* Lingkaran Avatar dengan Glow */}
         <div className="relative mb-6">
-          <div className="absolute inset-0 bg-[#b06fec] blur-2xl opacity-20 group-hover:opacity-40 transition-opacity" />
-          <div className="relative w-28 h-28 rounded-full bg-gradient-to-tr from-[#b06fec] to-pink-500 p-1">
-            <div className="w-full h-full rounded-full bg-[#1a1a1a] flex items-center justify-center overflow-hidden border-2 border-white/10">
-              <span className="text-4xl font-black text-white group-hover:scale-110 transition-transform duration-500">
-                {name.charAt(0)}
-              </span>
+          <div className="absolute inset-0 bg-[#b06fec] blur-2xl opacity-20 group-hover:opacity-50 transition-opacity" />
+          <div className="relative w-28 h-28 rounded-full bg-gradient-to-tr from-[#b06fec] to-purple-500 p-1 transition-transform duration-500 group-hover:scale-105">
+            <div className="w-full h-full rounded-full bg-[#1a1a1a] overflow-hidden border-2 border-white/10 relative">
+              <img
+                src={imageUrl} 
+                alt={name}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-purple-900/10 group-hover:opacity-0 transition-opacity duration-500" />
             </div>
           </div>
         </div>
@@ -83,7 +92,7 @@ export default function ProfileCard3D({ name, tagline, skills }: ProfileCardProp
           <p className="text-purple-200/70 italic text-sm mb-8 leading-relaxed">
             {tagline}
           </p>
-          
+
           {/* Skill Bars */}
           <div className="w-full space-y-4 text-left">
             {skills.map((skill, index) => (
@@ -93,7 +102,7 @@ export default function ProfileCard3D({ name, tagline, skills }: ProfileCardProp
                   <span>{skill.value}%</span>
                 </div>
                 <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
-                  <motion.div 
+                  <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: `${skill.value}%` }}
                     transition={{ duration: 1.5, delay: index * 0.2 }}
@@ -107,20 +116,20 @@ export default function ProfileCard3D({ name, tagline, skills }: ProfileCardProp
         </div>
 
         {/* Floating Decoration Elements */}
-        <motion.div 
+        <motion.div
           animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 4 }}
-          className="absolute -top-4 -right-4 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl flex items-center justify-center shadow-lg"
+          className="absolute top-7 right-6 w-10 h-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl flex items-center justify-center shadow-lg"
         >
           <span className="text-xl">✨</span>
         </motion.div>
-        
-        <motion.div 
+
+        <motion.div
           animate={{ y: [0, 15, 0], rotate: [0, -10, 0] }}
           transition={{ repeat: Infinity, duration: 5 }}
-          className="absolute -bottom-4 -left-4 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl flex items-center justify-center shadow-lg"
+          className="absolute bottom-5 left-4 w-8 h-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl flex items-center justify-center shadow-lg"
         >
-          <span className="text-xl">🚀</span>
+          <span className="text-sm">🚀</span>
         </motion.div>
       </motion.div>
     </motion.div>

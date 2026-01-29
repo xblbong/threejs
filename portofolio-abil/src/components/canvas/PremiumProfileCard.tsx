@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useCallback } from "react";
-import { Mail } from "lucide-react";
+import { Mail, ArrowUpRight } from "lucide-react";
 
 interface ProfileCardProps {
   avatarUrl: string;
@@ -28,13 +28,11 @@ export default function PremiumProfileCard({
     const width = card.clientWidth;
     const height = card.clientHeight;
 
-    // Hitung persentase posisi kursor (0-100)
     const percentX = (offsetX / width) * 100;
     const percentY = (offsetY / height) * 100;
 
-    // Hitung rotasi (-12.5 sampai 12.5 derajat)
-    const rotateX = (percentY - 50) / 4;
-    const rotateY = -(percentX - 50) / 4;
+    const rotateX = (percentY - 50) / 6; // Mengurangi intensitas rotasi agar lebih halus
+    const rotateY = -(percentX - 50) / 6;
 
     wrap.style.setProperty("--pointer-x", `${percentX}%`);
     wrap.style.setProperty("--pointer-y", `${percentY}%`);
@@ -43,84 +41,92 @@ export default function PremiumProfileCard({
   }, []);
 
   const handlePointerMove = (e: React.PointerEvent) => {
+    // Nonaktifkan efek 3D pada touch device agar tidak mengganggu scroll
+    if (e.pointerType === 'touch') return;
+    
     const rect = cardRef.current?.getBoundingClientRect();
     if (!rect) return;
     updateCardTransform(e.clientX - rect.left, e.clientY - rect.top);
   };
 
-  const handlePointerEnter = () => {
-    cardRef.current?.classList.add("active");
-  };
-
   const handlePointerLeave = () => {
-    const card = cardRef.current;
     const wrap = wrapRef.current;
-    if (!card || !wrap) return;
-
-    card.classList.remove("active");
-    // Reset ke tengah dengan halus
+    if (!wrap) return;
     wrap.style.setProperty("--rotate-x", `0deg`);
     wrap.style.setProperty("--rotate-y", `0deg`);
   };
 
   return (
-    <div ref={wrapRef} className="pc-card-wrapper relative">
+    <div ref={wrapRef} className="pc-card-wrapper w-full perspective-1000">
       <section
         ref={cardRef}
         onPointerMove={handlePointerMove}
-        onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
-        // Gunakan overflow-hidden di sini dengan border radius besar
-        className="pc-card relative w-[320px] h-[500px] md:w-[380px] md:h-[580px] rounded-[2.5rem] overflow-hidden border border-white/20 shadow-2xl cursor-none"
+        className="pc-card relative w-full aspect-[3/4.5] sm:aspect-[3/4.2] rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl transition-transform duration-200 ease-out touch-none"
+        style={{
+            transform: 'rotateX(var(--rotate-x)) rotateY(var(--rotate-y))',
+            transformStyle: 'preserve-3d'
+        }}
       >
-        {/* Layer 1: Background Warna Dinamis (Ubah warna saat hover kursor) */}
-        <div className="pc-card-bg" />
+        {/* Layer 1: Background Base */}
+        <div className="absolute inset-0 bg-[#0a0a0a]" />
 
-        {/* Layer 2: Full Image */}
-        <div className="absolute inset-0 z-[2]">
+        {/* Layer 2: Image with Gradient Overlay */}
+        <div className="absolute inset-0 z-[1]">
           <img
             src={avatarUrl}
             alt={name}
-            className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700"
+            className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
           />
-          {/* Overlay agar teks tetap terbaca */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/20 to-transparent" />
         </div>
 
-        {/* Layer 3: Efek Cahaya */}
-        <div className="pc-shine" />
-        <div className="pc-glare" />
+        {/* Layer 3: Interactive Shine (CSS Variables) */}
+        <div 
+            className="absolute inset-0 z-[2] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+            style={{
+                background: `radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(255,255,255,0.1) 0%, transparent 80%)`
+            }}
+        />
 
-        {/* Layer 4: Content (UI) */}
-        <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
-          <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 w-fit">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[10px] capitalize tracking-widest text-white/80 font-bold">
+        {/* Layer 4: Content */}
+        <div className="absolute inset-0 z-10 p-6 sm:p-8 flex flex-col justify-end">
+          <div className="mb-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10 w-fit">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]" />
+            <span className="text-[10px] uppercase tracking-[0.15em] text-white/90 font-bold">
               {status}
             </span>
           </div>
 
           <div className="space-y-1">
-            <h1 className="text-3xl font-black text-white tracking-tighter leading-none">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-none">
               {name}
-            </h1>
-            <p className="text-[#b06fec] font-medium tracking-wide">
+            </h2>
+            <p className="text-purple-400 font-medium text-sm sm:text-base">
               {title}
             </p>
           </div>
 
           <div className="mt-6 pt-6 border-t border-white/10 flex items-center justify-between">
             <div className="flex flex-col">
-              <span className="text-white/40 text-[10px] capitalize tracking-widest font-bold">Instagram</span>
-              <button onClick={() => window.location.href = `https://www.instagram.com/${handle}`} className="text-white/90 font-mono text-sm">@{handle}</button>
+              <span className="text-white/40 text-[10px] uppercase tracking-widest font-bold mb-1">Social Media</span>
+              <a 
+                href={`https://instagram.com/${handle}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white/90 hover:text-purple-400 transition-colors font-mono text-sm flex items-center gap-1"
+              >
+                @{handle}
+                <ArrowUpRight size={14} />
+              </a>
             </div>
             
-            <button 
-              className="p-3 rounded-2xl bg-white text-black hover:bg-[#b06fec] hover:text-white transition-all duration-300 transform active:scale-90"
-              onClick={() => window.location.href = 'mailto:sblhh.m@gmail.com'}
+            <a 
+              href="mailto:sblhh.m@gmail.com"
+              className="p-3 sm:p-4 rounded-2xl bg-white text-black hover:bg-purple-500 hover:text-white transition-all duration-300 active:scale-95 shadow-lg shadow-white/5"
             >
-              <Mail size={22} />
-            </button>
+              <Mail size={20} />
+            </a>
           </div>
         </div>
       </section>

@@ -5,6 +5,8 @@ import MouseGlow from "../components/effect/MouseGlow";
 import HeroSection from "../components/sections/HeroSections/HeroSection";
 import { Project } from "../types";
 import MyProjectsSection from "../components/sections/MyProject/MyProjectsSection";
+import SkillsSection from "../components/sections/SkillSection/SkillSection";
+import AboutSection from "../components/sections/AboutSection/AboutSection";
 
 const dummyProjects: Project[] = [
   {
@@ -27,13 +29,79 @@ const dummyProjects: Project[] = [
   },
   {
     id: "3",
-    title: "AI Image Generator",
-    description: "Text-to-image platform using OpenAI API with a futuristic purple silhouette theme.",
-    image_url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000",
-    tech_stack: ["Next.js", "Supabase", "OpenAI"],
-    link_demo: "https://example.com",
-    link_github: "https://github.com"
+    title: "Joint Crediting Mechanism (JCM)",
+    description: "inisiatif Pemerintah Jepang yang mendorong perusahaan-perusahaan Jepang untuk berinvestasi dalam proyek-proyek pembangunan rendah karbon di Indonesia.",
+    image_url: "image/project/jcm.png",
+    tech_stack: ["Next.js", "TypeScript", "Tailwind"],
+    link_demo: "https://jcm.ekon.go.id/id/",
+    link_github: "https://gitlab.com/nusantech/jcm/frontend-jcm"
   },
+  {
+    id: "4",
+    title: "we run the city",
+    description: "We Run the City! Dengan jarak setengah marathon yang menggugah (21 kilometer), acara ini menawarkan peserta tantangan lari.",
+    image_url: "image/project/werunthecity.png",
+    tech_stack: ["Next.js", "TypeScript", "Tailwind"],
+    link_demo: "https://jcm.ekon.go.id/id/",
+    link_github: "http://staging.werunthecity.id/"
+  },
+  {
+    id: "5",
+    title: "ICASVE 2025",
+    description: "Humans are experiencing significant shifts in the digital era, where artificial intelligence (AI) and creative innovation are playing pivotal roles in shaping the future of entrepreneurship.",
+    image_url: "image/project/icasve.png",
+    tech_stack: ["Laravel", "php", "Mysql", "Tailwind"],
+    link_demo: "https://icasve.ub.ac.id/",
+    link_github: "https://github.com/AnasKhalif/ICASVE"
+  },
+  {
+    id: "6",
+    title: "HMPSTI UB Kabinet Gema Nirvana 2023",
+    description: "HMPSTI berperan sebagai wadah bagi mahasiswa untuk mengembangkan keterampilan, pengetahuan, dan pengalaman dalam bidang teknologi informasi melalui berbagai kegiatan seperti seminar, workshop, dan kompetisi. ",
+    image_url: "image/project/hmpsti.png",
+    tech_stack: ["Laravel", "php", "Mysql", "Tailwind"],
+    link_demo: "https://www.hmpstiub.site/",
+    link_github: "https://github.com/Alfahreziii/HMPSTIUB"
+  },
+  {
+    id: "7",
+    title: "Samba TI UB 2025",
+    description: "Sambut Mahasiswa Baru Teknologi Informasi (SAMBA TI) adalah acara orientasi yang dirancang khusus untuk menyambut mahasiswa baru di jurusan Teknologi Informasi.",
+    image_url: "image/project/sambati.png",
+    tech_stack: ["Laravel", "php", "Mysql", "Tailwind"],
+    link_demo: "https://hmpsti.my.id/login",
+    link_github: "https://github.com/xblbong/samba-ti"
+  },
+  {
+    id: "8",
+    title: "PKKMB Yuwaraja XVII UB 2023",
+    description: "PKKMB (Pengenalan Kehidupan Kampus bagi Mahasiswa Baru) adalah serangkaian kegiatan yang dirancang untuk membantu mahasiswa baru beradaptasi dengan lingkungan kampus dan mempersiapkan mereka untuk kehidupan akademik dan sosial di perguruan tinggi.",
+    image_url: "image/project/yuwarajaxvii.png",
+    tech_stack: ["Laravel breeze", "filament", "php", "Mysql", "Tailwind"],
+    link_demo: "https://yuwaraja.my.id/",
+    link_github: "https://github.com/3EZYY/yuwarajaxvii"
+  },
+  {
+    id: "9",
+    title: "Fakultas Vokasi UB",
+    description: "Website Fakultas Vokasi adalah portal resmi yang menyediakan informasi lengkap tentang Fakultas Vokasi Universitas Brawijaya, termasuk program studi, fasilitas, kegiatan mahasiswa, dan berita terkini.",
+    image_url: "image/project/vokasiub.png",
+    tech_stack: ["wordpress",],
+    link_demo: "https://vokasi.ub.ac.id/",
+    link_github: ""
+  },
+];
+
+// my skills data
+const mySkills = [
+  { id: "1", name: "React / Next.js", category: "Frontend", level: 90 },
+  { id: "2", name: "TypeScript", category: "Frontend", level: 85 },
+  { id: "3", name: "Three.js", category: "Frontend", level: 75 },
+  { id: "4", name: "Tailwind CSS", category: "Frontend", level: 95 },
+  { id: "5", name: "Supabase", category: "Backend", level: 70 },
+  { id: "6", name: "PostgreSQL", category: "Backend", level: 65 },
+  { id: "7", name: "Git / GitHub", category: "Tools", level: 90 },
+  { id: "8", name: "Figma", category: "Design", level: 80 },
 ];
 
 export default async function HomePage() {
@@ -46,9 +114,9 @@ export default async function HomePage() {
     <>
       <Navbar />
       <HeroSection />
-      <MouseGlow />
-      <GlassOrb />
+      <AboutSection />
       <MyProjectsSection projects={dummyProjects} />
+      <SkillsSection />
     </>
   );
 }
